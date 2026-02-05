@@ -1,45 +1,29 @@
 class Solution {
     public static int numSubarrayProductLessThanK(int[] nums, int k) {
-        
-
-         int count=0;
-        for(int i=0;i<nums.length;i++)
+        long product=1;
+        int count=0;
+        int high=0;
+        int low=0;
+       while(high<nums.length)
+       {
+        product*=nums[high];
+        while(product>=k && low<=high)
         {
-            int product=nums[i];
-            if(product<k)
-            {
-                count++;
-                 if(i<nums.length-1)
-            {
-               product*=(nums[i+1]);
-                if(product<k)
-                {
-                count++;
-                 }
-
-
-               if(i<nums.length-2)
-            {
-                product*=(nums[i+2]);
-                 if(product<k)
-                {
-                count++;
-                 }
-            }
-            }
-            }
-           
-           
-           
-            
+            product/=nums[low];
+            low++;
         }
-        return count;
+
+        count+=(high-low)+1;
+        high++;
+       }
+       return count;
     }
 
     public static void main(String args[])
     {
-        int nums[]={10,2,2,5,4,4,4,3,7,7};
-        System.out.println(numSubarrayProductLessThanK(nums,289));
+        int nums[]={10,5,20};
+        int k=100;
+        System.out.println(numSubarrayProductLessThanK(nums,k));
        
     }
 }
